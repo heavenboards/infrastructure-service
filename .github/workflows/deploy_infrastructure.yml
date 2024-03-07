@@ -1,0 +1,19 @@
+name: 🔥 Деплой инфраструктуры приложения
+
+on:
+  push:
+    branches:
+      - '**'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 👉🏼 Переключаемся на файлы проекта
+        uses: actions/checkout@v3
+
+      - name: 👉🏼 Устанавливаем sshpass
+        run: sudo apt update && sudo apt install -y sshpass
+
+      - name: 👉🏼 Подключаемся к удаленному серверу
+        run: sshpass -p ${{ vars.REMOTE_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no root@${{ vars.REMOTE_SERVER_HOST }} "echo Connected to the remote server!"

@@ -1,0 +1,19 @@
+version: '3.8'
+
+networks:
+  ${DOCKER_NETWORK_NAME}:
+    driver: bridge
+    external: true
+
+services:
+  postgres:
+    image: postgres:15
+    container_name: heavenboards_postgres_instance
+    restart: unless-stopped
+    networks:
+      - ${DOCKER_NETWORK_NAME}
+    environment:
+      POSTGRES_USER: ${POSTGRES_DATABASE_USERNAME}
+      POSTGRES_PASSWORD: ${POSTGRES_DATABASE_PASSWORD}
+    ports:
+      - 5432:5432
