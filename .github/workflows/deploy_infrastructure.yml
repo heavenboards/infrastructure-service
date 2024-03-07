@@ -22,6 +22,6 @@ jobs:
         run: |
           sshpass -p ${{ vars.REMOTE_SERVER_PASSWORD }} scp docker-compose.yml root@${{ vars.REMOTE_SERVER_HOST }}:/root/heavenboards/infrastructure
 
-      - name: 👉🏼 Поднимаем docker-compose.yml
+      - name: 👉🏼 Переподнимаем network и все контейнеры
         run: |
-          sshpass -p ${{ vars.REMOTE_SERVER_PASSWORD }} scp docker-compose.yml root@${{ vars.REMOTE_SERVER_HOST }}:/root/heavenboards/infrastructure
+          sshpass -p ${{ vars.REMOTE_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no root@${{ vars.REMOTE_SERVER_HOST }} "cd /root/heavenboards/infrastructure && docker compose stop || true && docker compose rm || true && docker network create -d bridge ${{ vars.DOCKER_NETWORK_NAME }} || true && docker compose up -d --remove-orphans --env DOCKER_NETWORK_NAME=${{ vars.DOCKER_NETWORK_NAME }} POSTGRES_DATABASE_USERNAME=${{ vars.POSTGRES_DATABASE_USERNAME }} POSTGRES_DATABASE_PASSWORD=${{ vars.POSTGRES_DATABASE_PASSWORD }}"
