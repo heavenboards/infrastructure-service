@@ -1,7 +1,8 @@
 version: '3.8'
 
 networks:
-  ${DOCKER_NETWORK_NAME}:
+  main_network:
+    name: ${DOCKER_NETWORK_NAME}
     driver: bridge
     external: true
 
