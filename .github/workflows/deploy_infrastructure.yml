@@ -29,8 +29,8 @@ jobs:
             cd /root/heavenboards/infrastructure &&
             docker compose stop || true &&
             docker compose rm || true &&
-            docker network rm heavenboards_network || true &&
-            docker network create -d bridge heavenboards_network || true &&
+            docker network rm ${{ vars.DOCKER_NETWORK_NAME }} || true &&
+            docker network create -d bridge ${{ vars.DOCKER_NETWORK_NAME }} || true &&
             docker stop heavenboards_postgres_instance || true &&
             docker rm heavenboards_postgres_instance || true &&
             touch .env &&
