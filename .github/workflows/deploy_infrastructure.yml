@@ -24,4 +24,16 @@ jobs:
 
       - name: 👉🏼 Переподнимаем network и все контейнеры
         run: |
-          sshpass -p ${{ vars.REMOTE_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no root@${{ vars.REMOTE_SERVER_HOST }} "cd /root/heavenboards/infrastructure && docker compose stop || true && docker compose rm || true && docker network create -d bridge ${{ vars.DOCKER_NETWORK_NAME }} || true && docker compose up -d --remove-orphans --env DOCKER_NETWORK_NAME=${{ vars.DOCKER_NETWORK_NAME }} POSTGRES_DATABASE_USERNAME=${{ vars.POSTGRES_DATABASE_USERNAME }} POSTGRES_DATABASE_PASSWORD=${{ vars.POSTGRES_DATABASE_PASSWORD }}"
+          sshpass -p ${{ vars.REMOTE_SERVER_PASSWORD }} ssh -o StrictHostKeyChecking=no root@${{ vars.REMOTE_SERVER_HOST }} "
+            rm -rf /root/heavenboards/ || true &&
+            mkdir /root/heavenboards &&
+            mkdir /root/heavenboards/infrastructure &&
+            cd /root/heavenboards/infrastructure &&
+            docker compose stop || true &&
+            docker compose rm || true &&
+            docker network create -d bridge ${{ vars.DOCKER_NETWORK_NAME }} || true &&
+            touch .env
+            echo DOCKER_NETWORK_NAME=${{ vars.DOCKER_NETWORK_NAME }} > .env
+            echo POSTGRES_DATABASE_USERNAME=${{ vars.POSTGRES_DATABASE_USERNAME }} >> .env
+            echoPOSTGRES_DATABASE_PASSWORD=${{ vars.POSTGRES_DATABASE_PASSWORD }} >> .env
+            docker compose up -d --remove-orphans"
