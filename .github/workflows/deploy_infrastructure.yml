@@ -39,4 +39,4 @@ jobs:
             ls -la &&
             cat .env &&
             docker compose up -d --remove-orphans &&
-            docker exec -it heavenboards_postgres_instance psql -U ${{ vars.POSTGRES_DATABASE_USERNAME }} -d postgres -c 'create database user_service; create database project_service; create database board_service; create database task_service;'"
+            docker exec heavenboards_postgres_instance psql -U ${{ vars.POSTGRES_DATABASE_USERNAME }} -d postgres -c 'create database user_service; create database project_service; create database board_service; create database task_service;'"
