@@ -1,9 +1,7 @@
 name: 🔥 Деплой инфраструктуры приложения
 
 on:
-  push:
-    branches:
-      - '**'
+  workflow_dispatch:
 
 jobs:
   deploy:
