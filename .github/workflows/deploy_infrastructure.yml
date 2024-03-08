@@ -31,6 +31,8 @@ jobs:
             docker compose rm || true &&
             docker network rm heavenboards_network || true &&
             docker network create -d bridge heavenboards_network || true &&
+            docker stop heavenboards_postgres_instance || true &&
+            docker rm heavenboards_postgres_instance || true &&
             touch .env &&
             echo POSTGRES_DATABASE_USERNAME=${{ vars.POSTGRES_DATABASE_USERNAME }} > .env &&
             echo POSTGRES_DATABASE_PASSWORD=${{ vars.POSTGRES_DATABASE_PASSWORD }} >> .env &&
