@@ -34,8 +34,10 @@ jobs:
             docker compose rm || true &&
             docker network rm ${{ vars.DOCKER_NETWORK_NAME }} || true &&
             docker network create -d bridge ${{ vars.DOCKER_NETWORK_NAME }} || true &&
-            touch .env
-            echo DOCKER_NETWORK_NAME=${{ vars.DOCKER_NETWORK_NAME }} > .env
-            echo POSTGRES_DATABASE_USERNAME=${{ vars.POSTGRES_DATABASE_USERNAME }} >> .env
-            echo POSTGRES_DATABASE_PASSWORD=${{ vars.POSTGRES_DATABASE_PASSWORD }} >> .env
+            touch .env &&
+            echo DOCKER_NETWORK_NAME=${{ vars.DOCKER_NETWORK_NAME }} > .env &&
+            echo POSTGRES_DATABASE_USERNAME=${{ vars.POSTGRES_DATABASE_USERNAME }} >> .env &&
+            echo POSTGRES_DATABASE_PASSWORD=${{ vars.POSTGRES_DATABASE_PASSWORD }} >> .env &&
+            ls -la &&
+            cat .env &&
             docker compose up -d --remove-orphans"
